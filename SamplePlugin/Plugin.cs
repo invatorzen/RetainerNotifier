@@ -1,4 +1,4 @@
-﻿using Dalamud.Game.Command;
+using Dalamud.Game.Command;
 using Dalamud.IoC;
 using Dalamud.Plugin;
 using System.IO;
@@ -17,7 +17,8 @@ public sealed class Plugin : IDalamudPlugin
     [PluginService] internal static IDataManager DataManager { get; private set; } = null!;
     [PluginService] internal static IPluginLog Log { get; private set; } = null!;
 
-    private const string CommandName = "/pmycommand";
+    private const string CommandName = "/retainernotifier";
+    private const string CommandNameAlias = "/rn";
 
     public Configuration Configuration { get; init; }
 
@@ -40,7 +41,12 @@ public sealed class Plugin : IDalamudPlugin
 
         CommandManager.AddHandler(CommandName, new CommandInfo(OnCommand)
         {
-            HelpMessage = "A useful message to display in /xlhelp"
+            HelpMessage = "Not sure what to do with this."
+        });
+
+        CommandManager.AddHandler(CommandNameAlias, new CommandInfo(OnCommand)
+        {
+            HelpMessage = "An easier command to call, does same as " + CommandName + "."
         });
 
         PluginInterface.UiBuilder.Draw += DrawUI;
